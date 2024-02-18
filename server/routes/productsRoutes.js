@@ -16,6 +16,6 @@ router.get('/:id', readSingleProduct);
 router.put('/:id', updateSingleProduct);
 
 // DELETE SINGLE PRODUCT
-router.delete(':/id', deleteSingleProduct);
+router.delete('/:id', deleteSingleProduct);
 
 export default router;
