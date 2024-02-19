@@ -21,19 +21,19 @@ const Detail = () => {
         <tbody>
           <tr>
             <td>ID</td>
-            <td>: {productDetail._id}</td>
+            <td>: {productDetail?._id}</td>
           </tr>
           <tr>
             <td>Name</td>
-            <td>: {productDetail.name}</td>
+            <td>: {productDetail?.name}</td>
           </tr>
           <tr>
             <td>Price</td>
-            <td>: {productDetail.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+            <td>: {productDetail?.price?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
           </tr>
           <tr>
             <td>Stock</td>
-            <td>: {productDetail.stock}</td>
+            <td>: {productDetail?.stock}</td>
           </tr>
         </tbody>
       </table>

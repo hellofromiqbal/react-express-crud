@@ -10,7 +10,7 @@ const Home = () => {
       .then((data) => setAllProducts(data.data))
       .catch((err) => console.log(err));
   }, []);
-  
+
   return(
     <div className="main">
       <Link to="/tambah" className="btn btn-primary">Tamah Produk</Link>
@@ -28,13 +28,13 @@ const Home = () => {
         </thead>
         <tbody>
           {allProducts.map((product, index) => (
-            <tr key={product._id}>
+            <tr key={product?._id}>
               <td>{index + 1}</td>
-              <td>{product.name}</td>
-              <td className="text-right">{product.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+              <td>{product?.name}</td>
+              <td className="text-right">{product?.price?.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
               <td className="text-center">
-                <Link to={`/detail/${product._id}`} className="btn btn-sm btn-info">Detail</Link>
-                <Link to={`/edit/${product._id}`} className="btn btn-sm btn-warning">Edit</Link>
+                <Link to={`/detail/${product?._id}`} className="btn btn-sm btn-info">Detail</Link>
+                <Link to={`/edit/${product?._id}`} className="btn btn-sm btn-warning">Edit</Link>
                 <Link to="#" className="btn btn-sm btn-danger">Delete</Link>
               </td>
             </tr>  
