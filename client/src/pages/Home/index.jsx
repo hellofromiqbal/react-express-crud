@@ -27,7 +27,7 @@ const Home = () => {
         </thead>
         <tbody>
           {allProducts.map((product, index) => (
-            <tr>
+            <tr key={product._id}>
               <td>{index + 1}</td>
               <td>{product.name}</td>
               <td className="text-right">{product.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
