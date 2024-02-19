@@ -4,13 +4,18 @@ import { Link } from 'react-router-dom'
 import './index.scss'
 
 const Home = () => {
+  const [searchInput, setSearchInput] = useState('');
   const [allProducts, setAllProducts] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:5173/products')
+    fetch(`http://localhost:5173/products/`, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({ searchInput })
+    })
       .then((res) => res.json())
       .then((data) => setAllProducts(data.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [searchInput]);
   const handleDeleteProduct = async (id) => {
     const deleteConfirmation = confirm('Are you sure?');
     if(deleteConfirmation) {
@@ -32,7 +37,12 @@ const Home = () => {
     <div className="main">
       <Link to="/tambah" className="btn btn-primary">Tamah Produk</Link>
       <div className="search">
-        <input type="text" placeholder="Masukan kata kunci..."/>
+        <input
+          type="text"
+          placeholder="Masukan kata kunci..."
+          value={searchInput}
+          onChange={(e) => setSearchInput((prev) => prev = e.target.value)}
+        />
       </div>
       <table className="table">
         <thead>
@@ -44,7 +54,7 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {allProducts.map((product, index) => (
+          {allProducts?.map((product, index) => (
             <tr key={product?._id}>
               <td>{index + 1}</td>
               <td>{product?.name}</td>

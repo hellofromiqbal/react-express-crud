@@ -3,11 +3,11 @@ import { createNewProduct, readAllProducts, readSingleProduct, updateSingleProdu
 
 const router = express.Router();
 
+// READ ALL PRODUCTS
+router.post('/', readAllProducts);
+
 // CREATE NEW PRODUCT
 router.post('/', createNewProduct);
-
-// READ ALL PRODUCTS
-router.get('/', readAllProducts);
 
 // READ SINGLE PRODUCT
 router.get('/:id', readSingleProduct);

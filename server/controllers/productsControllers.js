@@ -17,7 +17,14 @@ export const createNewProduct = async (req, res) => {
 
 export const readAllProducts = async (req, res) => {
   try {
-    const allProducts = await Product.find();
+    const { searchInput } = req.body;
+    let allProducts;
+    if(searchInput === '') {
+      allProducts = await Product.find();
+    } else {
+      const regex = new RegExp(searchInput, 'i');
+      allProducts = await Product.find({ name: { $regex: regex } });
+    };
     return res.json({
       message: "All products fetched!",
       data: allProducts
