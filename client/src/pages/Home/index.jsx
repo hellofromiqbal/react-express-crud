@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './index.scss'
@@ -10,6 +11,22 @@ const Home = () => {
       .then((data) => setAllProducts(data.data))
       .catch((err) => console.log(err));
   }, []);
+  const handleDeleteProduct = async (id) => {
+    const deleteConfirmation = confirm('Are you sure?');
+    if(deleteConfirmation) {
+      const res = await fetch(`http://localhost:5173/products/${id}`, { method: 'DELETE' });
+      if(!res.ok) {
+        const result = await res.json();
+        throw new Error(result.message);
+      } else {
+        const result = await res.json();
+        alert(result.message);
+        window.location.reload();
+      };
+    } else {
+      return;
+    };
+  };
 
   return(
     <div className="main">
@@ -35,7 +52,10 @@ const Home = () => {
               <td className="text-center">
                 <Link to={`/detail/${product?._id}`} className="btn btn-sm btn-info">Detail</Link>
                 <Link to={`/edit/${product?._id}`} className="btn btn-sm btn-warning">Edit</Link>
-                <Link to="#" className="btn btn-sm btn-danger">Delete</Link>
+                <button
+                  className="btn btn-sm btn-danger"
+                  onClick={() => handleDeleteProduct(product?._id)}
+                >Delete</button>
               </td>
             </tr>  
           ))}
