@@ -10,6 +10,7 @@ const Home = () => {
       .then((data) => setAllProducts(data.data))
       .catch((err) => console.log(err));
   }, []);
+  
   return(
     <div className="main">
       <Link to="/tambah" className="btn btn-primary">Tamah Produk</Link>
