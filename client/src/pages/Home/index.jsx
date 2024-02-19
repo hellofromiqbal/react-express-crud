@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './index.scss'
 
 const Home = () => {
+  const [allProducts, setAllProducts] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:5173/products')
+      .then((res) => res.json())
+      .then((data) => setAllProducts(data.data))
+      .catch((err) => console.log(err));
+  }, []);
   return(
     <div className="main">
       <Link to="/tambah" className="btn btn-primary">Tamah Produk</Link>
@@ -19,26 +26,18 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Laptop</td>
-            <td className="text-right">RP. 20.000.000</td>
-            <td className="text-center">
-              <Link to="/detail" className="btn btn-sm btn-info">Detail</Link>
-              <Link to="/edit" className="btn btn-sm btn-warning">Edit</Link>
-              <Link to="#" className="btn btn-sm btn-danger">Delete</Link>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Monitor</td>
-            <td className="text-right">RP. 10.000.000</td>
-            <td className="text-center">
-              <Link to="/detail" className="btn btn-sm btn-info">Detail</Link>
-              <Link to="/edit" className="btn btn-sm btn-warning">Edit</Link>
-              <Link to="#" className="btn btn-sm btn-danger">Delete</Link>
-            </td>
-          </tr>
+          {allProducts.map((product, index) => (
+            <tr>
+              <td>{index + 1}</td>
+              <td>{product.name}</td>
+              <td className="text-right">{product.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+              <td className="text-center">
+                <Link to={`/detail/${product._id}`} className="btn btn-sm btn-info">Detail</Link>
+                <Link to={`/edit/${product._id}`} className="btn btn-sm btn-warning">Edit</Link>
+                <Link to="#" className="btn btn-sm btn-danger">Delete</Link>
+              </td>
+            </tr>  
+          ))}
         </tbody>
       </table>
     </div>
